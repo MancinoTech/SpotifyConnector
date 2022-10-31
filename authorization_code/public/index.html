@@ -28,6 +28,7 @@
         <div id="oauth">
         </div>
         <button class="btn btn-default" id="obtain-new-token">Obtain new token using the refresh token</button>
+        <a href="/login" class="btn btn-primary">Change User</a>
       </div>
     </div>
 
@@ -121,6 +122,21 @@
           }
 
           document.getElementById('obtain-new-token').addEventListener('click', function() {
+            $.ajax({
+              url: '/refresh_token',
+              data: {
+                'refresh_token': refresh_token
+              }
+            }).done(function(data) {
+              access_token = data.access_token;
+              oauthPlaceholder.innerHTML = oauthTemplate({
+                access_token: access_token,
+                refresh_token: refresh_token
+              });
+            });
+          }, false);
+        }
+        document.getElementById('spotify-logout').addEventListener('click', function() {
             $.ajax({
               url: '/refresh_token',
               data: {
