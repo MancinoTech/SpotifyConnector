@@ -101,6 +101,18 @@ app.get('/callback', function(req, res) {
 
         // use the access token to access the Spotify Web API
         request.get(options, function(error, response, body) {
+          console.log('User Info:');
+          console.log(body);
+        });
+        var devices = {
+          url: 'https://api.spotify.com/v1/me/player/devices',
+          headers: { 'Authorization': 'Bearer ' + access_token },
+          json: true
+        };
+
+        // use the access token to get a list of available devices
+        request.get(devices, function(error, response, body) {
+          console.log('Devices:');
           console.log(body);
         });
 
